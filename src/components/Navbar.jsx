@@ -35,7 +35,7 @@ function NavLinks() {
 
       <Link to={"/help"}>
         <span className="text-blue-700 font-semibold hover:text-blue-900 transition">
-          Поддержка
+          {t("help")}
         </span>
       </Link>
     </div>
@@ -56,8 +56,8 @@ function CartBadge() {
       {totalQuantity > 0 && (
         <span
           className="
-            absolute -top-2 -right-4 
-            bg-pink-600 text-white
+            absolute -top-4 -right-4 
+            bg-blue-600 text-white
             text-[10px] font-bold
             w-5 h-5 rounded-full
             flex items-center justify-center
@@ -80,8 +80,8 @@ function LanguageSelect() {
       defaultValue={i18n.language}
       className="border-[2px] border-blue-300 rounded-lg px-2 py-1 text-blue-700 bg-white hover:bg-blue-50 cursor-pointer"
     >
-      <option value="eng">Eng</option>
       <option value="rus">Rus</option>
+      <option value="eng">Eng</option>
     </select>
   );
 }
@@ -105,8 +105,8 @@ export function NavbarSimple() {
           <NavLinks />
         </div>
         <div className="hidden lg:flex items-center gap-4">
-          <LanguageSelect />
           <CartBadge />
+          <LanguageSelect />
         </div>
 
         <IconButton

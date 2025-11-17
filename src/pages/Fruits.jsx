@@ -12,6 +12,12 @@ import instance from "./../utils/axios";
 import { useCartStore } from "../store/cartStore";
 import { useTranslation } from "react-i18next";
 
+const Loader = () => (
+  <div className="flex items-center justify-center h-screen">
+    <div className="w-16 h-16 border-4 border-blue-300 border-t-blue-600 rounded-full animate-spin"></div>
+  </div>
+);
+
 const Fruits = () => {
   const { addToCart } = useCartStore();
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +34,7 @@ const Fruits = () => {
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
   if (error) return <h1>{error.message}</h1>;
 
   return (
@@ -42,6 +48,7 @@ const Fruits = () => {
           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
         />
       </div>
+
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {fruits?.map((fruit) => (
           <Card
@@ -59,6 +66,7 @@ const Fruits = () => {
                 className="h-full w-full object-cover"
               />
             </CardHeader>
+
             <CardBody className="p-5">
               <div className="mb-3 flex items-center justify-between">
                 <Typography
@@ -74,6 +82,7 @@ const Fruits = () => {
                   {fruit.price} сум/кг
                 </Typography>
               </div>
+
               <Typography
                 variant="small"
                 color="gray"
@@ -82,6 +91,7 @@ const Fruits = () => {
                 {fruit.desc}
               </Typography>
             </CardBody>
+
             <CardFooter className="px-5 pb-5 pt-0 flex justify-end">
               <Button
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"

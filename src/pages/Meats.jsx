@@ -12,12 +12,17 @@ import instance from "../utils/axios";
 import { useCartStore } from "../store/cartStore";
 import { useTranslation } from "react-i18next";
 
+const Loader = () => (
+  <div className="flex items-center justify-center h-screen">
+    <div className="w-16 h-16 border-4 border-blue-300 border-t-blue-600 rounded-full animate-spin"></div>
+  </div>
+);
+
 const Meats = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
   const { t } = useTranslation();
-
   const { addToCart } = useCartStore();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["getNewApi"],
     queryFn: async () => (await instance.get("/newApi")).data,
@@ -29,14 +34,15 @@ const Meats = () => {
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
   if (error) return <h1>{error.message}</h1>;
+
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
       <div className="max-w-7xl mx-auto mb-6">
         <input
           type="text"
-          placeholder= {t("search")}
+          placeholder={t("search")}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
@@ -60,6 +66,7 @@ const Meats = () => {
                 className="h-full w-full object-cover"
               />
             </CardHeader>
+
             <CardBody className="p-5">
               <div className="mb-3 flex items-center justify-between">
                 <Typography
@@ -75,6 +82,7 @@ const Meats = () => {
                   {meat.price} сум/кг
                 </Typography>
               </div>
+
               <Typography
                 variant="small"
                 color="gray"
@@ -83,6 +91,7 @@ const Meats = () => {
                 {meat.desc}
               </Typography>
             </CardBody>
+
             <CardFooter className="px-5 pb-5 pt-0 flex justify-end">
               <Button
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
