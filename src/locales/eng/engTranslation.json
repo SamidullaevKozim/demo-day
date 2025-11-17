@@ -1,0 +1,14 @@
+{
+    "fruits" : "Fruits",
+    "vegetables": "Vegetables",
+    "meats" : "Meats",
+    "cart" : "Cart",
+    "search" : "Search products",
+    "cartEmpty": "Cart is empty",
+    "totalSum": "Total",
+    "sum": "sum",
+    "kg": "kg",
+    "delete": "Delete",
+    "cleatCart": "Clean cart",
+    "buy": "Buy"
+}

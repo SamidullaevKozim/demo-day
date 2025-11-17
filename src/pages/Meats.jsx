@@ -7,15 +7,18 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import instance from "../utils/axios";
 import { useCartStore } from "../store/cartStore";
+import { useTranslation } from "react-i18next";
 
 const Meats = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
+  const { t } = useTranslation();
+
   const { addToCart } = useCartStore();
-  const { data } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["getNewApi"],
     queryFn: async () => (await instance.get("/newApi")).data,
   });
@@ -26,12 +29,14 @@ const Meats = () => {
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  if (isLoading) return <h1>Loading...</h1>;
+  if (error) return <h1>{error.message}</h1>;
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
       <div className="max-w-7xl mx-auto mb-6">
         <input
           type="text"
-          placeholder="Поиск мяса"
+          placeholder= {t("search")}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
@@ -83,7 +88,7 @@ const Meats = () => {
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 onClick={() => addToCart(meat)}
               >
-                Купить
+                {t("buy")}
               </Button>
             </CardFooter>
           </Card>

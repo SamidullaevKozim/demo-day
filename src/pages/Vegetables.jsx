@@ -10,15 +10,20 @@ import {
 import React, { useState } from "react";
 import instance from "./../utils/axios";
 import { useCartStore } from "../store/cartStore";
+import { useTranslation } from "react-i18next";
 
 const Vegetables = () => {
-  const [searchTerm, setSearchTerm] = useState(""); 
-   const { addToCart } = useCartStore();
+  const [searchTerm, setSearchTerm] = useState("");
+  const { addToCart } = useCartStore();
 
-  const { data } = useQuery({
+  const { t } = useTranslation();
+
+  const { data, isLoading, error } = useQuery({
     queryKey: ["getNewApi"],
     queryFn: async () => (await instance.get("/newApi")).data,
   });
+  if (isLoading) return <h1>Loading...</h1>;
+  if (error) return <h1>{error.message}</h1>;
 
   const vegetables = data
     ?.filter((item) => item.category === "vegetables")
@@ -31,7 +36,7 @@ const Vegetables = () => {
       <div className="max-w-7xl mx-auto mb-6">
         <input
           type="text"
-          placeholder="Поиск овощей"
+          placeholder={t("search")}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
@@ -83,7 +88,7 @@ const Vegetables = () => {
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 onClick={() => addToCart(vegetable)}
               >
-                Купить
+                {t("buy")}
               </Button>
             </CardFooter>
           </Card>
